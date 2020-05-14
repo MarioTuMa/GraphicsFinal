@@ -20,8 +20,28 @@ from draw import *
   ==================== """
 def first_pass( commands ):
 
-    name = ''
+    name = 'animation'
     num_frames = 1
+    frames = basename = vary = False
+
+    for command in commands:
+        if command['op'] == 'frames':
+            num_frames = int(command['args'][0])
+            frames = True
+
+        if command['op'] == 'basename':
+            name = command['args'][0]
+            basename = True
+
+        if command['op'] == 'vary':
+            vary = True
+
+    if (not frames) and vary:
+        exit()
+    if frames and (not basename):
+        print("No basename given, so default is \'animation\'")
+
+
 
     return (name, num_frames)
 
@@ -44,6 +64,12 @@ def first_pass( commands ):
   ===================="""
 def second_pass( commands, num_frames ):
     frames = [ {} for i in range(num_frames) ]
+    for command in commands:
+        if command['op'] == 'vary':
+            args = command['args']
+            slope = (args[3] - args[2]) / (args[1] - args[0])
+            for i in range(int(args[0]), int(args[1]) + 1):
+                frames[i][command['knob']] = args[2] + (i - args[0]) * slope
 
     return frames
 
@@ -164,5 +190,5 @@ def run(filename):
         elif c == 'display':
             display(screen)
         elif c == 'save':
-            save_extension(screen, args[0])
+            save_extension(screen, args[0] + '.png')
         # end operation loop
