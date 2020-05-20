@@ -1,4 +1,6 @@
+Akash Das (Period 5)
 Mario Tutuncu-Macias (Period 4)
+
 
 We want to make a gif "explaining" integration. We will plot a curve and increase the number rectangles in the gif.
 
