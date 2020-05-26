@@ -126,6 +126,7 @@ def run(filename):
         consts = ''
         coords = []
         coords1 = []
+        print(commands)
         for command in commands:
             # print(symbols)
             # print(command)
@@ -146,7 +147,12 @@ def run(filename):
             elif c == 'polynomial':
                 print(args)
                 coeffs = args[2:]
-                add_polynomial(args[0],args[1],coeffs,screen,zbuffer,color)
+                diff = args[1] - args[0]
+                if command['knob']:
+                    factor = symbols[command['knob']][1]
+                    right_end = args[0] + diff * factor
+                    add_polynomial(args[0],right_end,args[1],coeffs,screen,zbuffer,color)
+                #add_polynomial(args[0],args[1],coeffs,screen,zbuffer,color)
             elif c == 'sphere':
                 if command['constants']:
                     reflect = command['constants']

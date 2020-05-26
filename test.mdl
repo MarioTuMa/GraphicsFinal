@@ -1,2 +1,4 @@
-polynomial -10 10 -4 5 1
-save out.png
+frames 50
+basename poly
+polynomial -10 10 -4 5 1 k0
+vary k0 0 49 0 1

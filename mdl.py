@@ -203,15 +203,15 @@ def p_command_polynomial(p):
                | POLYNOMIAL SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER
                | POLYNOMIAL NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL
                | POLYNOMIAL SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL"""
-    cmd = {'op' : p[1], 'constants' : None, 'cs' : None, 'args':[]}
+    cmd = {'op' : p[1], 'constants' : None, 'knob' : None, 'args':[]}
     arg_start = 2
     if isinstance(p[2], str):
         cmd['constants'] = p[2]
         arg_start = 3
     if len(p) == 8 and isinstance(p[7], str):
-        cmd['cs'] = p[7]
+        cmd['knob'] = p[7]
     if len(p) == 9 and isinstance(p[8], str):
-          cmd['cs'] = p[8]
+          cmd['knob'] = p[8]
     cmd['args'] = p[arg_start:arg_start+5]
     commands.append(cmd)
 
