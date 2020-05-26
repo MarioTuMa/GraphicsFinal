@@ -229,10 +229,13 @@ def add_polynomial(lower,upper,end,coeffs,screen,zbuffer,color):
         maxVal = -minVal/10
     print(maxVal,minVal)
     for i in range(int((upper - lower) * 500 / (end - lower)) - 1):
+
+
         x = i*step+lower
 
         draw_line( i, int(500*(evaluatePolynomial(x,coeffs)-minVal)/(maxVal-minVal)), 0, i+1, int(500*(evaluatePolynomial(x+step,coeffs)-minVal)/(maxVal-minVal)), 0, screen, zbuffer, color )
 
+    draw_line(int(500*(-lower)/(end-lower)),0,0,int(500*(-lower)/(end-lower)),500,0, screen, zbuffer, color )
 def add_torus(polygons, cx, cy, cz, r0, r1, step ):
     points = generate_torus(cx, cy, cz, r0, r1, step)
 

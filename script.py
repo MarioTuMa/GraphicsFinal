@@ -152,7 +152,8 @@ def run(filename):
                     factor = symbols[command['knob']][1]
                     right_end = args[0] + diff * factor
                     add_polynomial(args[0],right_end,args[1],coeffs,screen,zbuffer,color)
-                #add_polynomial(args[0],args[1],coeffs,screen,zbuffer,color)
+                else:
+                    add_polynomial(args[0],args[1],args[1],coeffs,screen,zbuffer,color)
             elif c == 'sphere':
                 if command['constants']:
                     reflect = command['constants']
