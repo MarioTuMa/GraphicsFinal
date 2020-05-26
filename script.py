@@ -99,7 +99,7 @@ def run(filename):
               255,
               255]]
 
-    color = [0, 0, 0]
+    color = [255, 255, 255]
     symbols['.white'] = ['constants',
                          {'red': [0.2, 0.5, 0.5],
                           'green': [0.2, 0.5, 0.5],
@@ -143,6 +143,9 @@ def run(filename):
                 draw_polygons(tmp, screen, zbuffer, view, ambient, light, symbols, reflect)
                 tmp = []
                 reflect = '.white'
+            elif c == 'polynomial':
+                print(args)
+                add_polynomial(args[0],args[1],args[2],args[3],args[4],screen,zbuffer,color)
             elif c == 'sphere':
                 if command['constants']:
                     reflect = command['constants']

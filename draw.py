@@ -203,6 +203,36 @@ def generate_sphere( cx, cy, cz, r, step ):
             #print 'rotation: %d\tcircle%d'%(rotation, circle)
     return points
 
+def evaluatePolynomial(x,coeffs):
+    if(len(coeffs)==1):
+        return coeffs[0]
+    return coeffs[0]+x*evaluatePolynomial(x,coeffs[1:])
+
+def add_polynomial(lower,upper,constant,linear,quadratic,screen,zbuffer,color):
+    step = (upper-lower)/500
+    coeffs = [constant,linear,quadratic]
+    place = lower
+    maxVal = 8
+    minVal = -8
+    for i in range(500):
+        x = i*step+lower
+        if(evaluatePolynomial(i*step+lower,coeffs)> maxVal):
+            maxVal = evaluatePolynomial(i*step+lower,coeffs)
+        if(evaluatePolynomial(i*step+lower,coeffs)< minVal):
+            minVal = evaluatePolynomial(i*step+lower,coeffs)
+    print(maxVal,minVal)
+    maxVal*=1.25
+    minVal*=1.25
+    if(abs(minVal)*10<maxVal):
+        minVal = -maxVal/10
+    if(abs(maxVal)*10<abs(minVal)):
+        maxVal = -minVal/10    
+    print(maxVal,minVal)
+    for i in range(499):
+        x = i*step+lower
+
+        draw_line( i, int(500*(evaluatePolynomial(x,coeffs)-minVal)/(maxVal-minVal)), 0, i+1, int(500*(evaluatePolynomial(x+step,coeffs)-minVal)/(maxVal-minVal)), 0, screen, zbuffer, color )
+
 def add_torus(polygons, cx, cy, cz, r0, r1, step ):
     points = generate_torus(cx, cy, cz, r0, r1, step)
 
