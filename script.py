@@ -145,7 +145,8 @@ def run(filename):
                 reflect = '.white'
             elif c == 'polynomial':
                 print(args)
-                add_polynomial(args[0],args[1],args[2],args[3],args[4],screen,zbuffer,color)
+                coeffs = args[2:]
+                add_polynomial(args[0],args[1],coeffs,screen,zbuffer,color)
             elif c == 'sphere':
                 if command['constants']:
                     reflect = command['constants']

@@ -1,2 +1,2 @@
-polynomial -10 10 3 -2 5
+polynomial -10 10 -4 5 1
 save out.png

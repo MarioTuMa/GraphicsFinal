@@ -208,9 +208,8 @@ def evaluatePolynomial(x,coeffs):
         return coeffs[0]
     return coeffs[0]+x*evaluatePolynomial(x,coeffs[1:])
 
-def add_polynomial(lower,upper,constant,linear,quadratic,screen,zbuffer,color):
+def add_polynomial(lower,upper,coeffs,screen,zbuffer,color):
     step = (upper-lower)/500
-    coeffs = [constant,linear,quadratic]
     place = lower
     maxVal = 8
     minVal = -8
@@ -226,7 +225,7 @@ def add_polynomial(lower,upper,constant,linear,quadratic,screen,zbuffer,color):
     if(abs(minVal)*10<maxVal):
         minVal = -maxVal/10
     if(abs(maxVal)*10<abs(minVal)):
-        maxVal = -minVal/10    
+        maxVal = -minVal/10
     print(maxVal,minVal)
     for i in range(499):
         x = i*step+lower
