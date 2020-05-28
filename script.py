@@ -78,6 +78,11 @@ def run(filename):
     """
     This function runs an mdl script
     """
+    user_coeffs = []
+    for i in range(3):
+        user_coeffs.append(float(input("What is x^" + str(i) + " coefficient: ")))
+    print(user_coeffs)
+
     p = mdl.parseFile(filename)
 
     if p:
@@ -126,7 +131,7 @@ def run(filename):
         consts = ''
         coords = []
         coords1 = []
-        print(commands)
+        # print(commands)
         for command in commands:
             # print(symbols)
             # print(command)
@@ -145,13 +150,12 @@ def run(filename):
                 tmp = []
                 reflect = '.white'
             elif c == 'polynomial':
-                print(args)
                 coeffs = args[2:]
                 diff = args[1] - args[0]
                 if command['knob']:
                     factor = symbols[command['knob']][1]
                     right_end = args[0] + diff * factor
-                    add_polynomial(args[0],right_end,args[1],coeffs,screen,zbuffer,color)
+                    add_polynomial(args[0],right_end,args[1],user_coeffs,screen,zbuffer,color)
                 else:
                     add_polynomial(args[0],args[1],args[1],coeffs,screen,zbuffer,color)
             elif c == 'sphere':

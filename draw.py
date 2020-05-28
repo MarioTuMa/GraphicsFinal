@@ -220,14 +220,14 @@ def add_polynomial(lower,upper,end,coeffs,screen,zbuffer,color):
             maxVal = evaluatePolynomial(i*step+lower,coeffs)
         if(evaluatePolynomial(i*step+lower,coeffs)< minVal):
             minVal = evaluatePolynomial(i*step+lower,coeffs)
-    print(maxVal,minVal)
+    #print(maxVal,minVal)
     maxVal*=1.25
     minVal*=1.25
     if(abs(minVal)*10<maxVal):
         minVal = -maxVal/10
     if(abs(maxVal)*10<abs(minVal)):
         maxVal = -minVal/10
-    print(maxVal,minVal)
+    #print(maxVal,minVal)
     for i in range(int((upper - lower) * 500 / (end - lower)) - 1):
 
 
