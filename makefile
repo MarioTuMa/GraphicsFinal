@@ -6,3 +6,4 @@ clean:
 
 clear:
 	rm *pyc *out parsetab.py *ppm anim/*.png
+	rm -rf __pycache__
