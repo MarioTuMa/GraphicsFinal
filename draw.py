@@ -118,8 +118,8 @@ def draw_polygons( polygons, screen, zbuffer, view, ambient, light, symbols, ref
 
 def add_box( polygons, x, y, z, width, height, depth ):
     x1 = x + width
-    y1 = y - height
-    z1 = z - depth
+    y1 = y + height
+    z1 = z + depth
 
     #front
     add_polygon(polygons, x, y, z, x1, y1, z, x1, y, z)
@@ -208,7 +208,7 @@ def evaluatePolynomial(x,coeffs):
         return coeffs[0]
     return coeffs[0]+x*evaluatePolynomial(x,coeffs[1:])
 
-def add_polynomial(lower,upper,end,coeffs,screen,zbuffer,color):
+def add_polynomial(lower,upper,end,coeffs,numboxes,screen,zbuffer,color):
     # step = (upper-lower)/500
     step = (end-lower)/500
     place = lower
@@ -231,16 +231,30 @@ def add_polynomial(lower,upper,end,coeffs,screen,zbuffer,color):
     #print(maxVal,minVal)
     draw_line(int(500*(-lower)/(end-lower)),0,0,int(500*(-lower)/(end-lower)),500,0, screen, zbuffer, [255,0,0] )
     draw_line(0,int(500*(-minVal/(maxVal-minVal))),0,500,int(500*-minVal/(maxVal-minVal)),0, screen, zbuffer, [255,0,0] )
-    
+
+
+
+    for i in range(int(numboxes)):
+
+        startx = int(500*i/numboxes)
+        starty = int(500*(-minVal/(maxVal-minVal)))
+        endy = int( 500*(evaluatePolynomial(i/numboxes * (end-lower)+lower,coeffs)-minVal)/(maxVal-minVal))
+        width = int(500/numboxes)
+        endx = startx+width
+        add_rectangle(startx,endx,starty,endy,screen,zbuffer,[0,255,0])
     for i in range(int((upper - lower) * 500 / (end - lower)) - 1):
 
 
         x = i*step+lower
 
         draw_line( i, int(500*(evaluatePolynomial(x,coeffs)-minVal)/(maxVal-minVal)), 0, i+1, int(500*(evaluatePolynomial(x+step,coeffs)-minVal)/(maxVal-minVal)), 0, screen, zbuffer, color )
-
-
+        
     print(str(100*(upper-lower)/(end-lower))+"% done")
+
+def add_rectangle(startx,endx,starty,endy,screen,zbuffer,color):
+    for i in range(startx,endx):
+        draw_line(i,starty,0,i,endy,0,screen,zbuffer,color)
+
 def add_torus(polygons, cx, cy, cz, r0, r1, step ):
     points = generate_torus(cx, cy, cz, r0, r1, step)
 
