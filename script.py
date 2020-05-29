@@ -159,6 +159,17 @@ def run(filename):
                     add_polynomial(args[0],right_end,args[1],user_coeffs,args[-1],screen,zbuffer,color)
                 else:
                     add_polynomial(args[0],args[1],args[1],user_coeffs,args[-1],screen,zbuffer,color)
+            elif c == 'boxes':
+                coeffs = args[2:-1]
+                numboxes = args[-1]
+                diff = args[1] - args[0]
+                if command['knob']:
+                    factor = symbols[command['knob']][1]
+                    print(factor)
+                    add_boxes(args[0],args[1],factor,user_coeffs,args[-1],screen,zbuffer,color)
+                else:
+                    add_boxes(args[0],args[1],1,user_coeffs,args[-1],screen,zbuffer,color)
+
             elif c == 'sphere':
                 if command['constants']:
                     reflect = command['constants']

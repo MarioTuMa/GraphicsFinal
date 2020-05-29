@@ -14,6 +14,7 @@ tokens = (
     "AMBIENT",
     "TORUS",
     "POLYNOMIAL",
+    "BOXES",
     "SPHERE",
     "BOX",
     "LINE",
@@ -54,6 +55,7 @@ reserved = {
     "ambient" : "AMBIENT",
     "torus" : "TORUS",
     "polynomial" : "POLYNOMIAL",
+    "boxes" : "BOXES",
     "sphere" : "SPHERE",
     "box" : "BOX",
     "line" : "LINE",
@@ -203,6 +205,23 @@ def p_command_polynomial(p):
                | POLYNOMIAL SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER
                | POLYNOMIAL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL
                | POLYNOMIAL SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL"""
+    cmd = {'op' : p[1], 'constants' : None, 'knob' : None, 'args':[]}
+    arg_start = 2
+    if isinstance(p[2], str):
+        cmd['constants'] = p[2]
+        arg_start = 3
+    if len(p) == 9 and isinstance(p[8], str):
+        cmd['knob'] = p[8]
+    if len(p) == 10 and isinstance(p[9], str):
+          cmd['knob'] = p[9]
+    cmd['args'] = p[arg_start:arg_start+6]
+    commands.append(cmd)
+
+def p_command_boxes(p):
+    """command : BOXES NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER
+               | BOXES SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER
+               | BOXES NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL
+               | BOXES SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL"""
     cmd = {'op' : p[1], 'constants' : None, 'knob' : None, 'args':[]}
     arg_start = 2
     if isinstance(p[2], str):

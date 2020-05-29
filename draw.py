@@ -234,22 +234,52 @@ def add_polynomial(lower,upper,end,coeffs,numboxes,screen,zbuffer,color):
 
 
 
-    for i in range(int(numboxes)):
-
-        startx = int(500*i/numboxes)
-        starty = int(500*(-minVal/(maxVal-minVal)))
-        endy = int( 500*(evaluatePolynomial(i/numboxes * (end-lower)+lower,coeffs)-minVal)/(maxVal-minVal))
-        width = int(500/numboxes)
-        endx = startx+width
-        add_rectangle(startx,endx,starty,endy,screen,zbuffer,[0,255,0])
+    # for i in range(int(numboxes)):
+    #
+    #     startx = int(500*i/numboxes)
+    #     starty = int(500*(-minVal/(maxVal-minVal)))
+    #     endy = int( 500*(evaluatePolynomial(i/numboxes * (end-lower)+lower,coeffs)-minVal)/(maxVal-minVal))
+    #     width = int(500/numboxes)
+    #     endx = startx+width
+    #     add_rectangle(startx,endx,starty,endy,screen,zbuffer,[0,255,0])
     for i in range(int((upper - lower) * 500 / (end - lower)) - 1):
 
 
         x = i*step+lower
 
         draw_line( i, int(500*(evaluatePolynomial(x,coeffs)-minVal)/(maxVal-minVal)), 0, i+1, int(500*(evaluatePolynomial(x+step,coeffs)-minVal)/(maxVal-minVal)), 0, screen, zbuffer, color )
-        
+
     print(str(100*(upper-lower)/(end-lower))+"% done")
+
+def add_boxes(lower,upper,factor,coeffs,numboxes,screen,zbuffer,color):
+    step = (upper-lower)/500
+    place = lower
+    maxVal = 8
+    minVal = -8
+    for i in range(500):
+        x = i*step+lower
+        if(evaluatePolynomial(i*step+lower,coeffs)> maxVal):
+            maxVal = evaluatePolynomial(i*step+lower,coeffs)
+        if(evaluatePolynomial(i*step+lower,coeffs)< minVal):
+            minVal = evaluatePolynomial(i*step+lower,coeffs)
+    #print(maxVal,minVal)
+    maxVal*=1.25
+    minVal*=1.25
+
+    if(abs(minVal)*10<maxVal):
+        minVal = -maxVal/10
+    if(abs(maxVal)*10<abs(minVal)):
+        maxVal = -minVal/10
+
+    for i in range(int(numboxes)):
+        startx = int(500*i/numboxes)
+        starty = int(500*(-minVal/(maxVal-minVal)))
+        endy = int( 500*(evaluatePolynomial(i/numboxes * (upper-lower)+lower,coeffs)-minVal)/(maxVal-minVal))
+        width = int(500/numboxes)
+        endx = startx+width
+        add_rectangle(startx,endx,starty,(endy - starty) * factor + starty,screen,zbuffer,[0,255,0])
+
+
 
 def add_rectangle(startx,endx,starty,endy,screen,zbuffer,color):
     for i in range(startx,endx):
