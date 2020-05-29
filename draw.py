@@ -277,7 +277,8 @@ def add_boxes(lower,upper,factor,coeffs,numboxes,screen,zbuffer,color):
         endy = int( 500*(evaluatePolynomial(i/numboxes * (upper-lower)+lower,coeffs)-minVal)/(maxVal-minVal))
         width = int(500/numboxes)
         endx = startx+width
-        add_rectangle(startx,endx,starty,(endy - starty) * factor + starty,screen,zbuffer,[0,255,0])
+        if factor > 0 and factor < 0.99:
+            add_rectangle(startx,endx,starty,(endy - starty) * factor + starty,screen,zbuffer,[0,255,0])
 
 
 
