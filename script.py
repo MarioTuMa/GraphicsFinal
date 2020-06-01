@@ -79,7 +79,8 @@ def run(filename):
     This function runs an mdl script
     """
     user_coeffs = []
-    for i in range(3):
+    degree = int(input("What is the degree of your polynomial: "))
+    for i in range(degree+1):
         user_coeffs.append(float(input("What is x^" + str(i) + " coefficient: ")))
     print(user_coeffs)
 

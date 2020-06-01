@@ -278,8 +278,10 @@ def add_boxes(lower,upper,factor,coeffs,numboxes,screen,zbuffer,color):
         width = int(500/numboxes)
         endx = startx+width
         if factor > 0 and factor < 0.99:
-            add_rectangle(startx,endx,starty,(endy - starty) * factor + starty,screen,zbuffer,[0,255,0])
-
+            if(endy>starty):
+                add_rectangle(startx,endx,starty,(endy - starty) * factor + starty,screen,zbuffer,[0,255,0])
+            else:
+                add_rectangle(startx,endx,starty,(endy - starty) * factor + starty,screen,zbuffer,[255,0,0])
 
 
 def add_rectangle(startx,endx,starty,endy,screen,zbuffer,color):
