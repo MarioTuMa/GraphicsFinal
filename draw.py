@@ -220,7 +220,7 @@ def add_polynomial(lower,upper,end,coeffs,numboxes,screen,zbuffer,color):
             maxVal = evaluatePolynomial(i*step+lower,coeffs)
         if(evaluatePolynomial(i*step+lower,coeffs)< minVal):
             minVal = evaluatePolynomial(i*step+lower,coeffs)
-    #print(maxVal,minVal)
+    print(maxVal,minVal)
     maxVal*=1.25
     minVal*=1.25
 
@@ -262,7 +262,7 @@ def add_boxes(lower,upper,factor,coeffs,numboxes,screen,zbuffer,color):
             maxVal = evaluatePolynomial(i*step+lower,coeffs)
         if(evaluatePolynomial(i*step+lower,coeffs)< minVal):
             minVal = evaluatePolynomial(i*step+lower,coeffs)
-    #print(maxVal,minVal)
+    print(maxVal,minVal)
     maxVal*=1.25
     minVal*=1.25
 
