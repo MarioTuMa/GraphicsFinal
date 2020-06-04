@@ -14,6 +14,7 @@ tokens = (
     "AMBIENT",
     "TORUS",
     "POLYNOMIAL",
+    "CHARS",
     "BOXES",
     "SPHERE",
     "BOX",
@@ -55,6 +56,7 @@ reserved = {
     "ambient" : "AMBIENT",
     "torus" : "TORUS",
     "polynomial" : "POLYNOMIAL",
+    "chars" : "CHARS",
     "boxes" : "BOXES",
     "sphere" : "SPHERE",
     "box" : "BOX",
@@ -215,6 +217,13 @@ def p_command_polynomial(p):
     if len(p) == 10 and isinstance(p[9], str):
           cmd['knob'] = p[9]
     cmd['args'] = p[arg_start:arg_start+6]
+    commands.append(cmd)
+
+def p_command_chars(p):
+    """command : CHARS SYMBOL NUMBER NUMBER NUMBER"""
+    cmd = {'op' : p[1], 'constants' : None, 'knob' : None, 'args':[]}
+    print("hi")
+    cmd['args'] = p[2:5]
     commands.append(cmd)
 
 def p_command_boxes(p):

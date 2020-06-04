@@ -141,7 +141,7 @@ def run(filename):
         # print(commands)
         for command in commands:
             # print(symbols)
-            # print(command)
+            print(command)
             c = command['op']
             args = command['args']
             knob_value = 1
@@ -166,6 +166,9 @@ def run(filename):
                     add_polynomial(args[0],right_end,args[1],user_coeffs,args[-1],screen,zbuffer,color)
                 else:
                     add_polynomial(args[0],args[1],args[1],user_coeffs,args[-1],screen,zbuffer,color)
+            elif c == 'chars':
+                add_text('hi',50,50)
+                print("hi")
             elif c == 'boxes':
                 coeffs = args[2:-1]
                 numboxes = args[-1]

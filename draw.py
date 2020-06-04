@@ -211,6 +211,7 @@ def evaluatePolynomial(x,coeffs):
 def add_polynomial(lower,upper,end,coeffs,numboxes,screen,zbuffer,color):
     # step = (upper-lower)/500
     step = (end-lower)/500
+    add_text("hi FUCK YES IT WORKED 0123456789",50,50,screen,zbuffer)
     place = lower
     maxVal = 8
     minVal = -8
@@ -251,6 +252,50 @@ def add_polynomial(lower,upper,end,coeffs,numboxes,screen,zbuffer,color):
 
     print(str(100*(upper-lower)/(end-lower))+"% done")
 
+def add_text(text,x,y,screen,zbuffer):
+    if(len(text)==0):
+        pass
+    elif(text[0]==' '):
+        add_text(text[1:],x+6,y,screen,zbuffer)
+    else:
+        z=""
+        if text[0] in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ':
+            z="big"
+
+        fin = open("chars/"+z+text[0]+".ppm")
+        p3 = fin.readline()
+        dimensions = fin.readline().rstrip().split(" ")
+        xchar= int(dimensions[0])
+        ychar = int(dimensions[1])
+        print(xchar)
+        print(ychar)
+        file = fin.read()
+        arra = []
+        for i in range(ychar):
+            arra.append([])
+            for j in range(xchar):
+                arra[-1].append([0,0,0])
+        current = 0
+        for i in file.split("\n"):
+
+            if(len(i)>15):
+                for j in i.split(" "):
+                    if(len(j)!=0):
+
+                        #print(current)
+                        arra[int(current/(3*xchar))][int(current/3)%xchar][current%3]=255-int(j)
+                        current+=1
+        print(arra)
+        for i in range(len(arra)):
+            for j in range(len(arra[0])):
+                plot(screen, zbuffer, arra[i][j], x+j,y+ychar-i,0)
+
+
+
+        fin.close()
+        add_text(text[1:],x+xchar,y,screen,zbuffer)
+
+
 def add_boxes(lower,upper,factor,coeffs,numboxes,screen,zbuffer,color):
     step = (upper-lower)/500
     place = lower
@@ -262,7 +307,7 @@ def add_boxes(lower,upper,factor,coeffs,numboxes,screen,zbuffer,color):
             maxVal = evaluatePolynomial(i*step+lower,coeffs)
         if(evaluatePolynomial(i*step+lower,coeffs)< minVal):
             minVal = evaluatePolynomial(i*step+lower,coeffs)
-    print(maxVal,minVal)
+    #print(maxVal,minVal)
     maxVal*=1.25
     minVal*=1.25
 

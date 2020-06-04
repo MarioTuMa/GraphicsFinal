@@ -1,11 +1,11 @@
-frames 200
+frames 220
 basename poly
 polynomial -5 5 0 1 0 30 k0
-boxes -5 5 0 1 0 30 k1
-boxes -5 5 0 1 0 40 k2
-boxes -5 5 0 1 0 60 k3
+boxes -5 5 0 1 0 10 k1
+boxes -5 5 0 1 0 20 k2
+boxes -5 5 0 1 0 40 k3
 boxes -5 5 0 1 0 80 k4
-boxes -5 5 0 1 0 100 k5
+boxes -5 5 0 1 0 160 k5
 vary k0 0 49 0 1
 vary k1 50 69 0 0.98
 vary k1 70 79 0.98 0.991
@@ -16,4 +16,4 @@ vary k3 130 139 0.98 0.991
 vary k4 140 159 0 0.98
 vary k4 160 169 0.98 0.991
 vary k5 170 189 0 0.98
-vary k5 190 199 0.98 0.991
+vary k5 190 219 0.98 0.991
