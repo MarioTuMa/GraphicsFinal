@@ -79,16 +79,19 @@ def run(filename):
     This function runs an mdl script
     """
     user_coeffs = []
-    degree = int(input("What is the degree of your polynomial: "))
-    for i in range(degree+1):
-        a = str(input("What is x^" + str(i) + " coefficient: "))
-        if "/" in a:
-            a=a.split("/")
-            print("fraction")
-            user_coeffs.append(float(a[0])/float(a[1]))
-        else:
-            user_coeffs.append(float(a))
-    print(user_coeffs)
+    degree = int(input("If you want our polynomial, enter -1. Otherwise, What is the degree of your polynomial? "))
+    if(int(degree)==-1):
+        user_coeffs = [0,1,0,-1/6,0,1/120,0,-1/5040]
+    else:
+        for i in range(degree+1):
+            a = str(input("What is x^" + str(i) + " coefficient: "))
+            if "/" in a:
+                a=a.split("/")
+                print("fraction")
+                user_coeffs.append(float(a[0])/float(a[1]))
+            else:
+                user_coeffs.append(float(a))
+        print(user_coeffs)
 
     p = mdl.parseFile(filename)
 
@@ -141,7 +144,7 @@ def run(filename):
         # print(commands)
         for command in commands:
             # print(symbols)
-            print(command)
+            # print(command)
             c = command['op']
             args = command['args']
             knob_value = 1
@@ -166,16 +169,14 @@ def run(filename):
                     add_polynomial(args[0],right_end,args[1],user_coeffs,args[-1],screen,zbuffer,color)
                 else:
                     add_polynomial(args[0],args[1],args[1],user_coeffs,args[-1],screen,zbuffer,color)
-            elif c == 'chars':
-                add_text('hi',50,50)
-                print("hi")
             elif c == 'boxes':
                 coeffs = args[2:-1]
                 numboxes = args[-1]
                 diff = args[1] - args[0]
                 if command['knob']:
                     factor = symbols[command['knob']][1]
-                    print(factor)
+                    if(factor>0 and factor<0.991):
+                        print(str(factor*100)+"% done with this set of boxes")
                     add_boxes(args[0],args[1],factor,user_coeffs,args[-1],screen,zbuffer,color)
                 else:
                     add_boxes(args[0],args[1],1,user_coeffs,args[-1],screen,zbuffer,color)

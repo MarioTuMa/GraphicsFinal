@@ -1,7 +1,7 @@
 
 
 
-fin = open("font.ppm","r")
+fin = open("fonts/font.ppm","r")
 x = fin.read()
 arra = []
 for i in range(480):
@@ -33,12 +33,11 @@ for i in range(300):
             l1splitters[-1]+=1
         else:
             l1splitters.append(i)
-print(l1splitters)
-print(len(l1splitters))
 
 
 
 for char in l1:
+    print(char)
     starty=4
     startx=l1splitters[l1.index(char)]
     endx = l1splitters[l1.index(char)+1]
@@ -49,7 +48,7 @@ for char in l1:
 
         charArray.append(arra[i][startx:endx])
 
-    fout = open("../chars/"+char+".ppm","w")
+    fout = open("chars/"+char+".ppm","w")
     fout.write("P3\n"+str(abs(startx-endx))+" "+str(abs(starty-endy))+" \n255 \n")
     for i in charArray:
         for j in i:
@@ -59,30 +58,29 @@ for char in l1:
 l2splitters = []
 for i in range(350):
     sum = 0
-    for j in range(26,42):
+    for j in range(26,49):
         sum+=int(arra[j][i][0])
-    if(sum>=15.49825*255):
+    if(sum>=22.49825*255):
         if(len(l2splitters)>0 and l2splitters[-1]==i-1):
             l2splitters[-1]+=1
         else:
             l2splitters.append(i)
-print(l2splitters)
-print(len(l2splitters))
 
 
 
 for char in l2:
+    print(char)
     starty=26
     startx=l2splitters[l2.index(char)]
     endx = l2splitters[l2.index(char)+1]
-    endy = 42
+    endy = 49
     charArray = []
 
     for i in range(starty,endy):
 
         charArray.append(arra[i][startx:endx])
 
-    fout = open("../chars/big"+char+".ppm","w")
+    fout = open("chars/big"+char+".ppm","w")
     fout.write("P3\n"+str(abs(startx-endx))+" "+str(abs(starty-endy))+" \n255 \n")
     for i in charArray:
         for j in i:
@@ -99,12 +97,10 @@ for i in range(350):
             l3splitters[-1]+=1
         else:
             l3splitters.append(i)
-print(l3splitters)
-print(len(l3splitters))
-
 
 
 for char in l3:
+    print(char)
     starty=50
     startx=l3splitters[l3.index(char)]
     endx = l3splitters[l3.index(char)+1]
@@ -115,7 +111,7 @@ for char in l3:
 
         charArray.append(arra[i][startx:endx])
 
-    fout = open("../chars/"+char+".ppm","w")
+    fout = open("chars/"+char+".ppm","w")
     fout.write("P3\n"+str(abs(startx-endx))+" "+str(abs(starty-endy))+" \n255 \n")
     for i in charArray:
         for j in i:

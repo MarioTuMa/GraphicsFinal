@@ -211,7 +211,15 @@ def evaluatePolynomial(x,coeffs):
 def add_polynomial(lower,upper,end,coeffs,numboxes,screen,zbuffer,color):
     # step = (upper-lower)/500
     step = (end-lower)/500
-    add_text("hi FUCK YES IT WORKED 0123456789",50,50,screen,zbuffer)
+    polystring = ""
+    for i in range(len(coeffs)):
+        if(coeffs[i]!=0):
+            polystring+=str(int(coeffs[i]*100)/100)
+            polystring+="x^"
+            polystring+=str(i)
+            polystring+="+"
+    polystring=polystring[:-1]
+    add_text(polystring,50,350,screen,zbuffer)
     place = lower
     maxVal = 8
     minVal = -8
@@ -221,7 +229,7 @@ def add_polynomial(lower,upper,end,coeffs,numboxes,screen,zbuffer,color):
             maxVal = evaluatePolynomial(i*step+lower,coeffs)
         if(evaluatePolynomial(i*step+lower,coeffs)< minVal):
             minVal = evaluatePolynomial(i*step+lower,coeffs)
-    print(maxVal,minVal)
+
     maxVal*=1.25
     minVal*=1.25
 
@@ -249,8 +257,8 @@ def add_polynomial(lower,upper,end,coeffs,numboxes,screen,zbuffer,color):
         x = i*step+lower
 
         draw_line( i, int(500*(evaluatePolynomial(x,coeffs)-minVal)/(maxVal-minVal)), 0, i+1, int(500*(evaluatePolynomial(x+step,coeffs)-minVal)/(maxVal-minVal)), 0, screen, zbuffer, color )
-
-    print(str(100*(upper-lower)/(end-lower))+"% done")
+    if(upper/end<0.99):
+        print(str(100*(upper-lower)/(end-lower))+"% done with polynomial")
 
 def add_text(text,x,y,screen,zbuffer):
     if(len(text)==0):
@@ -267,8 +275,7 @@ def add_text(text,x,y,screen,zbuffer):
         dimensions = fin.readline().rstrip().split(" ")
         xchar= int(dimensions[0])
         ychar = int(dimensions[1])
-        print(xchar)
-        print(ychar)
+
         file = fin.read()
         arra = []
         for i in range(ychar):
@@ -285,7 +292,7 @@ def add_text(text,x,y,screen,zbuffer):
                         #print(current)
                         arra[int(current/(3*xchar))][int(current/3)%xchar][current%3]=255-int(j)
                         current+=1
-        print(arra)
+
         for i in range(len(arra)):
             for j in range(len(arra[0])):
                 plot(screen, zbuffer, arra[i][j], x+j,y+ychar-i,0)
@@ -316,18 +323,27 @@ def add_boxes(lower,upper,factor,coeffs,numboxes,screen,zbuffer,color):
     if(abs(maxVal)*10<abs(minVal)):
         maxVal = -minVal/10
 
+    area = 0
     for i in range(int(numboxes)):
         startx = int(500*i/numboxes)
         starty = int(500*(-minVal/(maxVal-minVal)))
         endy = int( 500*(evaluatePolynomial(i/numboxes * (upper-lower)+lower,coeffs)-minVal)/(maxVal-minVal))
         width = int(500/numboxes)
         endx = startx+width
+        area+=(endx-startx)*(endy-starty)
         if factor > 0 and factor < 0.99:
             if(endy>starty):
                 add_rectangle(startx,endx,starty,(endy - starty) * factor + starty,screen,zbuffer,[0,255,0])
             else:
                 add_rectangle(startx,endx,starty,(endy - starty) * factor + starty,screen,zbuffer,[255,0,0])
 
+    area/=500
+    area/=500
+    area*=(maxVal-minVal)
+    area*=(upper-lower)
+    if(numboxes>0 and factor > 0 and factor < 0.99):
+        add_text("Green minus red area: ",50,50,screen,zbuffer)
+        add_text(str(int(area*1000)/1000),50,25,screen,zbuffer)
 
 def add_rectangle(startx,endx,starty,endy,screen,zbuffer,color):
     for i in range(startx,endx):
