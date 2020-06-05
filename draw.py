@@ -330,16 +330,14 @@ def add_boxes(lower,upper,factor,coeffs,numboxes,screen,zbuffer,color):
         endy = int( 500*(evaluatePolynomial(i/numboxes * (upper-lower)+lower,coeffs)-minVal)/(maxVal-minVal))
         width = int(500/numboxes)
         endx = startx+width
-        area+=(endx-startx)*(endy-starty)
+        area+=evaluatePolynomial(i/numboxes * (upper-lower)+lower,coeffs)
         if factor > 0 and factor < 0.99:
             if(endy>starty):
                 add_rectangle(startx,endx,starty,(endy - starty) * factor + starty,screen,zbuffer,[0,255,0])
             else:
                 add_rectangle(startx,endx,starty,(endy - starty) * factor + starty,screen,zbuffer,[255,0,0])
 
-    area/=500
-    area/=500
-    area*=(maxVal-minVal)
+    area/=numboxes
     area*=(upper-lower)
     if(numboxes>0 and factor > 0 and factor < 0.99):
         add_text("Green minus red area: ",50,50,screen,zbuffer)
