@@ -208,6 +208,12 @@ def evaluatePolynomial(x,coeffs):
         return coeffs[0]
     return coeffs[0]+x*evaluatePolynomial(x,coeffs[1:])
 
+def evaluateIntegral(lower, upper, coeffs):
+    total = 0
+    for i in range(len(coeffs)):
+        total += coeffs[i] * (upper ** (i+1) - lower ** (i+1)) / (i+1)
+    return total
+
 def add_polynomial(lower,upper,end,coeffs,numboxes,screen,zbuffer,color):
     # step = (upper-lower)/500
     step = (end-lower)/500
@@ -302,7 +308,6 @@ def add_text(text,x,y,screen,zbuffer):
         fin.close()
         add_text(text[1:],x+xchar,y,screen,zbuffer)
 
-
 def add_boxes(lower,upper,factor,coeffs,numboxes,screen,zbuffer,color):
     step = (upper-lower)/500
     place = lower
@@ -339,9 +344,12 @@ def add_boxes(lower,upper,factor,coeffs,numboxes,screen,zbuffer,color):
 
     area/=numboxes
     area*=(upper-lower)
+    actualArea = evaluateIntegral(lower, upper, coeffs)
     if(numboxes>0 and factor > 0 and factor < 0.99):
         add_text("Green minus red area: ",50,50,screen,zbuffer)
         add_text(str(int(area*1000)/1000),50,25,screen,zbuffer)
+        add_text("Actual Value: ", 390, 50, screen, zbuffer)
+        add_text(str(int(actualArea*1000)/1000),390,25,screen,zbuffer)
 
 def add_rectangle(startx,endx,starty,endy,screen,zbuffer,color):
     for i in range(startx,endx):
