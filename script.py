@@ -81,7 +81,7 @@ def run(filename):
     user_coeffs = []
     degree = int(input("If you want our polynomial, enter -1. Otherwise, What is the degree of your polynomial? "))
     if(int(degree)==-1):
-        user_coeffs = [0,1,0,-1/6,0,1/120,0,-1/5040]
+        user_coeffs = [1,0,-1/2,0,1/24,0,-1/720,0,1/40320]
     else:
         for i in range(degree+1):
             a = str(input("What is x^" + str(i) + " coefficient: "))
